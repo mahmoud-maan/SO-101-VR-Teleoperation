@@ -2,6 +2,8 @@
 
 A Meta Quest 3 XR application built in **Godot 4** that streams real-time hand tracking data (position + orientation) over WebSocket to a ROS 2 pipeline on a host computer — intended for robot teleoperation with the SO-101 arm.
 
+> **🚧 Work in Progress** — This project is under active development. The end goal is a complete VR teleoperation system for **bimanual robot arms**, where a user wearing a Meta Quest 3 can intuitively control two robot arms in real time using natural hand and wrist movements.
+
 ## Architecture
 
 ```
@@ -43,7 +45,7 @@ Positions are in metres (Godot world space). Rotations are Euler angles in degre
 - Android export template with Gradle build enabled
 
 ### ROS 2 pipeline (host computer)
-- ROS 2 Humble (or later)
+- ROS 2 Jazzy (or later)
 - Python package: `websockets`
 
 ```bash
@@ -126,15 +128,3 @@ Start the Godot app on the Quest 3 after the publisher node is running.
 
 ---
 
-## Roadmap / TODO
-
-- [ ] Use proper ROS 2 message types (`geometry_msgs/PoseStamped`) instead of raw JSON strings
-- [ ] Add individual finger joint tracking
-- [ ] Implement a teleop controller node that maps hand poses to SO-101 joint commands
-- [ ] Add latency/connection-quality feedback on the headset
-
----
-
-## License
-
-MIT
