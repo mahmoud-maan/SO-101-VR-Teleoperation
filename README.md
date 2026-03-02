@@ -1,6 +1,6 @@
 # SO-101 VR Teleoperation
 
-A Meta Quest 3 XR application built in **Godot 4** that streams real-time hand tracking data (position + orientation) over WebSocket to a ROS 2 pipeline on a host computer — intended for robot teleoperation with the SO-101 arm.
+A Meta Quest 3 XR application built in **Godot 4** that streams real-time hand tracking data (position + orientation) over WebSocket to a ROS 2 pipeline on a host computer intended for robot teleoperation with the SO-101 arm.
 
 > **🚧 Work in Progress** — This project is under active development. The end goal is a complete VR teleoperation system for **bimanual robot arms**, where a user wearing a Meta Quest 3 can intuitively control two robot arms in real time using natural hand and wrist movements.
 
