@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://oqibwy3an6dj"]
+
+[ext_resource type="Script" uid="uid://h4yk78x3bfwd" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://c03avfkaktv" path="res://3d_coordinate.tscn" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://dj628tw3ts565" path="res://ws_streamer.gd" id="3_h2yge"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+tonemap_mode = 2
+
+[node name="XROrigin3D" type="XROrigin3D" unique_id=931497123]
+script = ExtResource("1_ig7tw")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=130329988]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1958521385]
+environment = SubResource("Environment_0xm2m")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="." unique_id=1523303476]
+
+[node name="LeftHand" type="XRController3D" parent="." unique_id=1820647442]
+tracker = &"left_hand"
+
+[node name="3DCoordinate" parent="LeftHand" unique_id=838397713 instance=ExtResource("2_0xm2m")]
+
+[node name="RightHand" type="XRController3D" parent="." unique_id=2000349190]
+tracker = &"right_hand"
+
+[node name="3DCoordinate" parent="RightHand" unique_id=94046861 instance=ExtResource("2_0xm2m")]
+
+[node name="WSStreamer" type="Node" parent="." unique_id=635791853]
+script = ExtResource("3_h2yge")

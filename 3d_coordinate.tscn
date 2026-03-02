@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://c03avfkaktv"]
+
+[ext_resource type="Script" uid="uid://cr1e5j68v16xi" path="res://3d_coordinate.gd" id="1_bfhfr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lia1g"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_bfhfr"]
+material = SubResource("StandardMaterial3D_lia1g")
+radius = 0.006
+height = 0.012
+radial_segments = 12
+rings = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s1f31"]
+albedo_color = Color(0.8624165, 0.009020136, 1.92523e-07, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4su8u"]
+material = SubResource("StandardMaterial3D_s1f31")
+top_radius = 0.002
+bottom_radius = 0.002
+height = 0.07
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2tkcy"]
+albedo_color = Color(0.8627451, 0.007843138, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_riw6g"]
+material = SubResource("StandardMaterial3D_2tkcy")
+top_radius = 0.0
+bottom_radius = 0.006
+height = 0.015
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfhfr"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_s1f31"]
+material = SubResource("StandardMaterial3D_bfhfr")
+top_radius = 0.002
+bottom_radius = 0.002
+height = 0.07
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4su8u"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2tkcy"]
+material = SubResource("StandardMaterial3D_4su8u")
+top_radius = 0.0
+bottom_radius = 0.006
+height = 0.015
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_riw6g"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5sdm2"]
+material = SubResource("StandardMaterial3D_riw6g")
+top_radius = 0.002
+bottom_radius = 0.002
+height = 0.07
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ws7lr"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3jicg"]
+material = SubResource("StandardMaterial3D_ws7lr")
+top_radius = 0.0
+bottom_radius = 0.006
+height = 0.015
+
+[node name="3DCoordinate" type="Node3D" unique_id=838397713]
+script = ExtResource("1_bfhfr")
+
+[node name="Origin" type="MeshInstance3D" parent="." unique_id=288193664]
+mesh = SubResource("SphereMesh_bfhfr")
+
+[node name="XAxis" type="Node3D" parent="." unique_id=904188241]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Shaft" type="MeshInstance3D" parent="XAxis" unique_id=83947496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5540339e-09, 0.03555215, 0)
+mesh = SubResource("CylinderMesh_4su8u")
+
+[node name="Cone" type="MeshInstance3D" parent="XAxis" unique_id=1293953003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.077, 0)
+mesh = SubResource("CylinderMesh_riw6g")
+
+[node name="XLabel" type="Label3D" parent="XAxis" unique_id=1271499448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.128, 0)
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+modulate = Color(0.8627451, 0.007843138, 0, 1)
+text = "X"
+font_size = 24
+outline_size = 6
+
+[node name="YAxis" type="Node3D" parent="." unique_id=1111232405]
+
+[node name="Shaft" type="MeshInstance3D" parent="YAxis" unique_id=220736343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.035522196, 0)
+mesh = SubResource("CylinderMesh_s1f31")
+
+[node name="Cone" type="MeshInstance3D" parent="YAxis" unique_id=1499492503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.077, 0)
+mesh = SubResource("CylinderMesh_2tkcy")
+
+[node name="YLabel" type="Label3D" parent="YAxis" unique_id=2011546092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.128, 0)
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+modulate = Color(0, 1, 0, 1)
+text = "Y"
+font_size = 24
+outline_size = 6
+
+[node name="ZAxis" type="Node3D" parent="." unique_id=834391237]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+
+[node name="Shaft" type="MeshInstance3D" parent="ZAxis" unique_id=113956755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.036, 0)
+mesh = SubResource("CylinderMesh_5sdm2")
+
+[node name="Cone" type="MeshInstance3D" parent="ZAxis" unique_id=883856656]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.077, 0)
+mesh = SubResource("CylinderMesh_3jicg")
+
+[node name="Label3D" type="Label3D" parent="ZAxis" unique_id=528381742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.128, 0)
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+modulate = Color(0, 0, 1, 1)
+text = "Z"
+font_size = 24
+outline_size = 6
