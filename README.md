@@ -59,7 +59,7 @@ pip install websockets
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/<your-username>/SO-101-VR-Teleoperation.git
+git clone https://github.com/mahmoud-maan/SO-101-VR-Teleoperation.git
 cd SO-101-VR-Teleoperation
 ```
 
