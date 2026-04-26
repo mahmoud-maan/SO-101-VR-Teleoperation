@@ -1,0 +1,45 @@
+[0.937s] Invoking command in '/home/maan/SO-101-VR-Teleoperation/ros2_ws/src/xr_hand_pipeline': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/xr_hand_pipeline build --build-base /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build install --record /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/install.log --single-version-externally-managed install_data
+[1.210s] running egg_info
+[1.210s] creating ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info
+[1.231s] writing ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/PKG-INFO
+[1.232s] writing dependency_links to ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/dependency_links.txt
+[1.232s] writing entry points to ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/entry_points.txt
+[1.232s] writing requirements to ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/requires.txt
+[1.232s] writing top-level names to ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/top_level.txt
+[1.232s] writing manifest file '../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/SOURCES.txt'
+[1.275s] reading manifest file '../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/SOURCES.txt'
+[1.276s] writing manifest file '../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/SOURCES.txt'
+[1.276s] running build
+[1.276s] running build_py
+[1.277s] creating /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build
+[1.277s] creating /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build/lib
+[1.277s] creating /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build/lib/xr_hand_pipeline
+[1.277s] copying xr_hand_pipeline/hand_ws_publisher.py -> /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build/lib/xr_hand_pipeline
+[1.277s] copying xr_hand_pipeline/hand_pose_subscriber.py -> /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build/lib/xr_hand_pipeline
+[1.277s] copying xr_hand_pipeline/__init__.py -> /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build/lib/xr_hand_pipeline
+[1.277s] running install
+[1.283s] running install_lib
+[1.304s] creating /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline
+[1.305s] copying /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build/lib/xr_hand_pipeline/hand_ws_publisher.py -> /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline
+[1.305s] copying /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build/lib/xr_hand_pipeline/hand_pose_subscriber.py -> /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline
+[1.305s] copying /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build/lib/xr_hand_pipeline/__init__.py -> /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline
+[1.305s] byte-compiling /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline/hand_ws_publisher.py to hand_ws_publisher.cpython-312.pyc
+[1.307s] byte-compiling /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline/hand_pose_subscriber.py to hand_pose_subscriber.cpython-312.pyc
+[1.307s] byte-compiling /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline/__init__.py to __init__.cpython-312.pyc
+[1.307s] running install_data
+[1.307s] creating /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/share/ament_index
+[1.308s] creating /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/share/ament_index/resource_index
+[1.308s] creating /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/share/ament_index/resource_index/packages
+[1.308s] copying resource/xr_hand_pipeline -> /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/share/ament_index/resource_index/packages
+[1.308s] copying package.xml -> /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/share/xr_hand_pipeline
+[1.308s] creating /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/share/xr_hand_pipeline/launch
+[1.308s] copying launch/hand_pose.launch.py -> /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/share/xr_hand_pipeline/launch
+[1.308s] creating /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/share/xr_hand_pipeline/rviz
+[1.308s] copying rviz/hand_pose.rviz -> /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/share/xr_hand_pipeline/rviz
+[1.308s] running install_egg_info
+[1.331s] Copying ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info to /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline-0.0.0-py3.12.egg-info
+[1.332s] running install_scripts
+[1.476s] Installing hand_pose_subscriber script to /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/xr_hand_pipeline
+[1.476s] Installing hand_ws_publisher script to /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/xr_hand_pipeline
+[1.476s] writing list of installed files to '/home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/install.log'
+[1.501s] Invoked command in '/home/maan/SO-101-VR-Teleoperation/ros2_ws/src/xr_hand_pipeline' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/xr_hand_pipeline build --build-base /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/build install --record /home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/install.log --single-version-externally-managed install_data

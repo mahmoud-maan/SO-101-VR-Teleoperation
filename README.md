@@ -13,17 +13,23 @@ Meta Quest 3 (Godot 4 / OpenXR)
         ▼
 ROS 2 Node: hand_ws_publisher
   - Listens on ws://0.0.0.0:8765
-  - Publishes raw JSON to /hand_pose (std_msgs/String)
+  - Parses JSON, converts Euler → quaternion
+  - Publishes geometry_msgs/PoseStamped to:
+      /left_hand_pose
+      /right_hand_pose
         │
-        ▼
-ROS 2 Node: hand_pose_subscriber
-  - Subscribes to /hand_pose
-  - Parses and prints hand pose data
+        ├──▶ ROS 2 Node: hand_pose_subscriber
+        │      - Subscribes to both PoseStamped topics
+        │      - Prints position + quaternion to console
+        │
+        └──▶ RViz2
+               - Visualises /left_hand_pose  (blue arrow)
+               - Visualises /right_hand_pose (orange arrow)
 ```
 
 ## Message Format
 
-Each WebSocket frame is a JSON object:
+Each WebSocket frame is a JSON object (unchanged from Godot):
 
 ```json
 {
@@ -32,7 +38,12 @@ Each WebSocket frame is a JSON object:
 }
 ```
 
-Positions are in metres (Godot world space). Rotations are Euler angles in degrees.
+Positions are in metres (Godot world space).  
+Rotations are Euler angles **in degrees**, Godot **YXZ** order.
+
+The `hand_ws_publisher` node converts this to `geometry_msgs/PoseStamped`  
+(Euler → quaternion, `frame_id = world`) and publishes on  
+`/left_hand_pose` and `/right_hand_pose`.
 
 ---
 
@@ -94,12 +105,30 @@ cd ros2_ws
 # Build (first time or after changes)
 colcon build
 source install/setup.bash
+```
 
+### Option A — Launch everything at once (publisher + subscriber + RViz)
+
+```bash
+ros2 launch xr_hand_pipeline hand_pose.launch.py
+```
+
+This starts:
+- `hand_ws_publisher` — WebSocket server → `/left_hand_pose`, `/right_hand_pose`
+- `hand_pose_subscriber` — prints pose data to console
+- `rviz2` — pre-configured with blue (left) and orange (right) pose arrows
+
+### Option B — Run nodes individually
+
+```bash
 # Terminal 1 — WebSocket server + ROS publisher
 ros2 run xr_hand_pipeline hand_ws_publisher
 
 # Terminal 2 — subscriber (prints hand poses)
 ros2 run xr_hand_pipeline hand_pose_subscriber
+
+# Terminal 3 — RViz visualisation
+rviz2 -d $(ros2 pkg prefix xr_hand_pipeline)/share/xr_hand_pipeline/rviz/hand_pose.rviz
 ```
 
 Start the Godot app on the Quest 3 after the publisher node is running.
@@ -121,9 +150,13 @@ Start the Godot app on the Quest 3 after the publisher node is running.
 └── ros2_ws/
     └── src/
         └── xr_hand_pipeline/
+            ├── launch/
+            │   └── hand_pose.launch.py     # Launches all nodes + RViz
+            ├── rviz/
+            │   └── hand_pose.rviz          # RViz2 config (left=blue, right=orange)
             └── xr_hand_pipeline/
-                ├── hand_ws_publisher.py    # WebSocket server → /hand_pose
-                └── hand_pose_subscriber.py # /hand_pose → console
+                ├── hand_ws_publisher.py    # WebSocket → PoseStamped publisher
+                └── hand_pose_subscriber.py # PoseStamped → console
 ```
 
 ---
