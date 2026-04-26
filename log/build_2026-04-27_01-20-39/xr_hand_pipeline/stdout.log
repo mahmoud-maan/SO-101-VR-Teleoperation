@@ -1,0 +1,20 @@
+running egg_info
+writing ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/PKG-INFO
+writing dependency_links to ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/dependency_links.txt
+writing entry points to ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/entry_points.txt
+writing requirements to ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/requires.txt
+writing top-level names to ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/top_level.txt
+reading manifest file '../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/SOURCES.txt'
+writing manifest file '../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+running install_data
+running install_egg_info
+removing '/home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline-0.0.0-py3.12.egg-info' (and everything under it)
+Copying ../../../build/xr_hand_pipeline/xr_hand_pipeline.egg-info to /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/python3.12/site-packages/xr_hand_pipeline-0.0.0-py3.12.egg-info
+running install_scripts
+Installing hand_pose_subscriber script to /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/xr_hand_pipeline
+Installing hand_ws_publisher script to /home/maan/SO-101-VR-Teleoperation/install/xr_hand_pipeline/lib/xr_hand_pipeline
+writing list of installed files to '/home/maan/SO-101-VR-Teleoperation/build/xr_hand_pipeline/install.log'

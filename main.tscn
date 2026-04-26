@@ -19,6 +19,8 @@ tonemap_mode = 2
 [node name="XROrigin3D" type="XROrigin3D" unique_id=931497123]
 script = ExtResource("1_ig7tw")
 
+[node name="3DCoordinate" parent="." unique_id=640975249 instance=ExtResource("2_0xm2m")]
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=130329988]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true

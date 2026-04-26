@@ -10,6 +10,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name + '/launch', ['launch/hand_pose.launch.py']),
+        ('share/' + package_name + '/rviz', ['rviz/hand_pose.rviz']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
