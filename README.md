@@ -1,57 +1,67 @@
-# SO-101 VR Teleoperation
+# VR Hand Pose Tracking to ROS 2 Bridge
 
-A Meta Quest 3 XR application built in **Godot 4** that streams real-time hand tracking data (position + orientation) over WebSocket to a ROS 2 pipeline on a host computer intended for robot teleoperation with the SO-101 arm.
+A **Meta Quest 3** XR application built in **Godot 4.6** that streams real-time hand/controller tracking data (position + orientation) over WebSocket to a **ROS 2** pipeline on a host computer, where poses are visualised in **RViz2**.
 
-> **🚧 Work in Progress** — This project is under active development. The end goal is a complete VR teleoperation system for **bimanual robot arms**, where a user wearing a Meta Quest 3 can intuitively control two robot arms in real time using natural hand and wrist movements.
+This project is a self-contained bridge between a VR headset and ROS 2. It is intended as a foundation for downstream applications such as robot teleoperation.
+
+---
 
 ## Architecture
 
 ```
-Meta Quest 3 (Godot 4 / OpenXR)
+Meta Quest 3 (Godot 4.6 / OpenXR)
         │
-        │  WebSocket (Wi-Fi, port 8765)
+        │  WebSocket — Wi-Fi, port 8765
+        │  JSON: { pos: [x,y,z], quat: [x,y,z,w] }
         ▼
 ROS 2 Node: hand_ws_publisher
-  - Listens on ws://0.0.0.0:8765
-  - Parses JSON, converts Euler → quaternion
-  - Publishes geometry_msgs/PoseStamped to:
+  - Receives JSON over WebSocket
+  - Remaps coordinate frame: Godot (Y-up) → ROS REP-103 (Z-up)
+  - Publishes geometry_msgs/PoseStamped:
       /left_hand_pose
       /right_hand_pose
         │
         ├──▶ ROS 2 Node: hand_pose_subscriber
-        │      - Subscribes to both PoseStamped topics
-        │      - Prints position + quaternion to console
+        │      Prints position + quaternion to console
         │
         └──▶ RViz2
-               - Visualises /left_hand_pose  (blue arrow)
-               - Visualises /right_hand_pose (orange arrow)
+               Displays both hand poses as live 3-axis coordinate frames
 ```
+
+---
 
 ## Message Format
 
-Each WebSocket frame is a JSON object (unchanged from Godot):
+Each WebSocket frame sent from Godot is a JSON object:
 
 ```json
 {
-  "left_hand":  { "pos": [x, y, z], "rot": [rx, ry, rz] },
-  "right_hand": { "pos": [x, y, z], "rot": [rx, ry, rz] }
+  "left_hand":  { "pos": [x, y, z], "quat": [x, y, z, w] },
+  "right_hand": { "pos": [x, y, z], "quat": [x, y, z, w] }
 }
 ```
 
-Positions are in metres (Godot world space).  
-Rotations are Euler angles **in degrees**, Godot **YXZ** order.
+- `pos` — position in metres, Godot world space (Y-up)
+- `quat` — orientation as quaternion `[x, y, z, w]`, Godot world space
 
-The `hand_ws_publisher` node converts this to `geometry_msgs/PoseStamped`  
-(Euler → quaternion, `frame_id = world`) and publishes on  
-`/left_hand_pose` and `/right_hand_pose`.
+The `hand_ws_publisher` node converts both into ROS REP-103 convention before publishing:
+
+```
+Godot → ROS position:     ros_x = -godot_z
+                          ros_y = -godot_x
+                          ros_z =  godot_y
+
+Godot → ROS orientation:  q_ros = Q_GODOT_TO_ROS * q_godot
+                          where Q_GODOT_TO_ROS = (0.5, -0.5, -0.5, 0.5)
+```
 
 ---
 
 ## Requirements
 
 ### Godot app (Meta Quest 3)
-- [Godot 4.x](https://godotengine.org/)
-- **Godot OpenXR Vendors** plugin — install from the Godot Asset Library  
+- [Godot 4.6](https://godotengine.org/)
+- **Godot OpenXR Vendors** plugin — install from the Godot Asset Library
   *(Project → Asset Library → search "Godot OpenXR Vendors")*
 - Android export template with Gradle build enabled
 
@@ -70,13 +80,13 @@ pip install websockets
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/mahmoud-maan/SO-101-VR-Teleoperation.git
-cd SO-101-VR-Teleoperation
+git clone https://github.com/mahmoud-maan/vr-hand-bridge.git
+cd vr-hand-bridge
 ```
 
 ### 2. Install the Godot OpenXR Vendors plugin
 
-Open the project in Godot, then go to **AssetLib** and install **Godot OpenXR Vendors**.  
+Open the project in Godot, go to **AssetLib** and install **Godot OpenXR Vendors**.
 This populates `addons/godotopenxrvendors/.bin/` which is intentionally excluded from git.
 
 ### 3. Configure the server IP
@@ -88,12 +98,12 @@ In `ws_streamer.gd`, set `server_ip` to your computer's local IP address:
 @export var server_port: int = 8765
 ```
 
-Alternatively, set it in the Godot Inspector without editing the file.
+You can also set this in the Godot Inspector without editing the file.
 
 ### 4. Build and deploy to Quest 3
 
-Follow the [Godot Android export guide](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_android.html).  
-Enable **Gradle Build** and target **arm64-v8a**.
+Follow the [Godot Android export guide](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_android.html).
+Enable **Gradle Build**.
 
 ---
 
@@ -113,10 +123,10 @@ source install/setup.bash
 ros2 launch xr_hand_pipeline hand_pose.launch.py
 ```
 
-This starts:
-- `hand_ws_publisher` — WebSocket server → `/left_hand_pose`, `/right_hand_pose`
+Starts:
+- `hand_ws_publisher` — WebSocket server → publishes `/left_hand_pose`, `/right_hand_pose`
 - `hand_pose_subscriber` — prints pose data to console
-- `rviz2` — pre-configured with blue (left) and orange (right) pose arrows
+- `rviz2` — pre-configured, shows both hands as live 3-axis coordinate frames
 
 ### Option B — Run nodes individually
 
@@ -139,25 +149,23 @@ Start the Godot app on the Quest 3 after the publisher node is running.
 
 ```
 .
-├── main.gd                  # Initialises OpenXR interface
-├── main.tscn                # Root scene
-├── ws_streamer.gd           # Reads hand transforms, sends over WebSocket
-├── 3d_coordinate.gd/.tscn   # 3-D coordinate visualisation helper
-├── openxr_action_map.tres   # OpenXR input action map
-├── export_presets.cfg       # Godot Android export configuration
+├── main.gd                        # Initialises OpenXR interface
+├── main.tscn                      # Root scene
+├── ws_streamer.gd                 # Reads hand transforms, sends over WebSocket
+├── 3d_coordinate.gd/.tscn         # 3-D coordinate visualisation helper
+├── openxr_action_map.tres         # OpenXR input action map
+├── export_presets.cfg             # Godot Android export configuration
 ├── addons/
-│   └── godotopenxrvendors/  # Plugin metadata (binaries installed separately)
+│   └── godotopenxrvendors/        # Plugin metadata (binaries installed separately)
 └── ros2_ws/
     └── src/
         └── xr_hand_pipeline/
             ├── launch/
             │   └── hand_pose.launch.py     # Launches all nodes + RViz
             ├── rviz/
-            │   └── hand_pose.rviz          # RViz2 config (left=blue, right=orange)
+            │   └── hand_pose.rviz          # RViz2 config — 3-axis frames per hand
             └── xr_hand_pipeline/
-                ├── hand_ws_publisher.py    # WebSocket → PoseStamped publisher
+                ├── hand_ws_publisher.py    # WebSocket → PoseStamped (with frame remap)
                 └── hand_pose_subscriber.py # PoseStamped → console
 ```
-
----
 
