@@ -1,6 +1,5 @@
 import asyncio
 import json
-import math
 import threading
 
 import rclpy
@@ -22,25 +21,6 @@ def qmul(a, b):
         aw * bz + ax * by - ay * bx + az * bw,
         aw * bw - ax * bx - ay * by - az * bz,
     )
-
-
-def euler_yxz_deg_to_quaternion(rx_deg: float, ry_deg: float, rz_deg: float):
-    """Convert Euler angles (degrees, Godot YXZ extrinsic order) to quaternion (x, y, z, w).
-
-    Godot's Basis.get_euler() defaults to EulerOrder.YXZ, meaning the basis is
-    reconstructed as R = Ry * Rx * Rz.  We replicate that product in quaternion space.
-    """
-    rx = math.radians(rx_deg)
-    ry = math.radians(ry_deg)
-    rz = math.radians(rz_deg)
-
-    # Individual axis quaternions (x, y, z, w)
-    qx = (math.sin(rx / 2), 0.0, 0.0, math.cos(rx / 2))
-    qy = (0.0, math.sin(ry / 2), 0.0, math.cos(ry / 2))
-    qz = (0.0, 0.0, math.sin(rz / 2), math.cos(rz / 2))
-
-    # R = Ry * Rx * Rz  →  q = qy * qx * qz
-    return qmul(qmul(qy, qx), qz)
 
 
 # Fixed rotation quaternion: Godot world frame → ROS REP-103 world frame
@@ -67,10 +47,10 @@ def make_pose_stamped(node: 'HandWSPublisher', hand: dict) -> PoseStamped:
     msg.pose.position.y = -gx   # left     = -godot_x (godot X is right)
     msg.pose.position.z =  gy   # up       =  godot_y (godot Y is up)
 
-    # Convert Euler (Godot YXZ degrees) → quaternion in Godot frame,
-    # then rotate into ROS frame: q_ros = Q_GODOT_TO_ROS * q_godot
-    rot = hand['rot']
-    q_godot = euler_yxz_deg_to_quaternion(rot[0], rot[1], rot[2])
+    # Godot sends quaternion directly as [x, y, z, w]
+    # Rotate into ROS frame: q_ros = Q_GODOT_TO_ROS * q_godot
+    q = hand['quat']
+    q_godot = (float(q[0]), float(q[1]), float(q[2]), float(q[3]))
     qx, qy, qz, qw = qmul(_Q_GODOT_TO_ROS, q_godot)
     msg.pose.orientation.x = qx
     msg.pose.orientation.y = qy
