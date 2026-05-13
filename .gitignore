@@ -23,6 +23,9 @@ addons/godotopenxrvendors/.bin/
 # =============================================================================
 
 # colcon build output — regenerated with `colcon build`
+build/
+install/
+log/
 ros2_ws/build/
 ros2_ws/install/
 ros2_ws/log/
@@ -37,6 +40,9 @@ __pycache__/
 # =============================================================================
 # General
 # =============================================================================
+
+# Large media files (use Git LFS if you need to version these)
+media/
 
 # macOS metadata
 .DS_Store

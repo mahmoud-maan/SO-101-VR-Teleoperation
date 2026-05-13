@@ -10,8 +10,6 @@ https://github.com/user-attachments/assets/b4be5ba1-2df4-427b-bd60-992925221dc8
 
 > Left: Meta Quest 3 cast recording — Right: RViz2 live hand pose visualisation
 
-The video is also available at [`media/VR hand bridge.mp4`](media/VR%20hand%20bridge.mp4).
-
 ---
 
 ## Architecture
