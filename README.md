@@ -6,6 +6,16 @@ This project is a self-contained bridge between a VR headset and ROS 2. It is in
 
 ---
 
+## Demo
+
+https://github.com/user-attachments/assets/b4be5ba1-2df4-427b-bd60-992925221dc8
+
+> Left: Meta Quest 3 cast recording — Right: RViz2 live hand pose visualisation
+
+The video is also available at [`media/VR hand bridge.mp4`](media/VR%20hand%20bridge.mp4).
+
+---
+
 ## Architecture
 
 ```
@@ -168,4 +178,33 @@ Start the Godot app on the Quest 3 after the publisher node is running.
                 ├── hand_ws_publisher.py    # WebSocket → PoseStamped (with frame remap)
                 └── hand_pose_subscriber.py # PoseStamped → console
 ```
+
+---
+
+## How It Works
+
+1. The Godot app runs on the Quest 3 and tracks both hand/controller transforms every frame using OpenXR.
+2. Each frame, it packages the position and orientation (as quaternion) into a JSON message and sends it over WebSocket to the host computer on the local Wi-Fi network.
+3. The `hand_ws_publisher` ROS 2 node receives the message, remaps the coordinate frame from Godot's Y-up convention to ROS's Z-up convention (REP-103), and publishes two `PoseStamped` messages.
+4. Any ROS 2 node can subscribe to `/left_hand_pose` and `/right_hand_pose` — the included subscriber prints to console, and RViz2 renders them as live 3-axis coordinate frames.
+
+---
+
+## Coordinate Frame Convention
+
+Godot and ROS use different world coordinate systems. This project handles the conversion transparently:
+
+| Axis | Godot | ROS (REP-103) |
+|------|-------|---------------|
+| X | Right | Forward |
+| Y | Up | Left |
+| Z | Backward | Up |
+
+The conversion is applied to both position and orientation in `hand_ws_publisher.py` so downstream ROS nodes receive correctly framed data without any extra work.
+
+---
+
+## License
+
+Apache 2.0 — see [`LICENSE`](LICENSE) for details.
 
